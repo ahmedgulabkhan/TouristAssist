@@ -10,7 +10,7 @@ class AuthenticatePage extends StatefulWidget {
 
 class _AuthenticatePageState extends State<AuthenticatePage> {
   
-  bool showSignIn = true;
+  bool showSignIn = false;
   void toggleView() {
     setState(() {
       showSignIn = !showSignIn;
