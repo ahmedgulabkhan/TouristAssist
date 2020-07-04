@@ -1,5 +1,5 @@
 import 'package:TouristAssist/helper/helper_functions.dart';
-import 'package:TouristAssist/pages/home_page.dart';
+import 'package:TouristAssist/pages/guide_home_page.dart';
 import 'package:TouristAssist/services/auth_service.dart';
 import 'package:TouristAssist/services/database_service.dart';
 import 'package:TouristAssist/shared/constants.dart';
@@ -8,16 +8,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class SignInPage extends StatefulWidget {
+class GuideSignInPage extends StatefulWidget {
 
   final Function toggleView;
-  SignInPage({this.toggleView});
+  GuideSignInPage({this.toggleView});
 
   @override
-  _SignInPageState createState() => _SignInPageState();
+  _GuideSignInPageState createState() => _GuideSignInPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _GuideSignInPageState extends State<GuideSignInPage> {
 
   TextEditingController _emailEditingController = new TextEditingController();
   TextEditingController _passwordEditingController = new TextEditingController();
@@ -34,7 +34,7 @@ class _SignInPageState extends State<SignInPage> {
         _isLoading = true;
       });
 
-      await _authService.signInWithEmailAndPassword(_emailEditingController.text, _passwordEditingController.text).then((result) async {
+      await _authService.signInGuideWithEmailAndPassword(_emailEditingController.text, _passwordEditingController.text).then((result) async {
         if (result != null) {
           QuerySnapshot userInfoSnapshot = await DatabaseService().getTouristData(_emailEditingController.text);
 
@@ -55,7 +55,8 @@ class _SignInPageState extends State<SignInPage> {
             print("Full Name: $value");
           });
 
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => GuideHomePage()), (Route<dynamic> route) => false);
+          // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => GuideHomePage()));
         }
         else {
           setState(() {
@@ -137,7 +138,7 @@ class _SignInPageState extends State<SignInPage> {
                   Text.rich(
                     TextSpan(
                       text: "Don't have an account? ",
-                      style: TextStyle(color: Colors.white, fontSize: 16.0),
+                      style: TextStyle(color: Colors.white, fontSize: 14.0),
                       children: <TextSpan>[
                         TextSpan(
                           text: 'Register here',

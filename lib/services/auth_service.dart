@@ -13,33 +13,75 @@ class AuthService {
   }
 
 
-  // sign in with email and password
-  Future signInWithEmailAndPassword(String email, String password) async {
-    try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      FirebaseUser user = result.user;
-      return _userFromFirebaseUser(user);
-    } catch(e) {
-      print(e.toString());
+  // sign in tourist with email and password
+  Future signInTouristWithEmailAndPassword(String email, String password) async {
+    bool isWrongLogin = await DatabaseService().isGuideSigningIn(email);
+    if(isWrongLogin) {
       return null;
+    }
+    else {
+      try {
+        AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+        FirebaseUser user = result.user;
+        return _userFromFirebaseUser(user);
+      } catch(e) {
+        print(e.toString());
+        return null;
+      }
     }
   }
 
 
-  // register with email and password
-  Future registerWithEmailAndPassword(String fullName, String email, String password) async {
+  // register tourist with email and password
+  Future registerTouristWithEmailAndPassword(String fullName, String email, String password) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
 
       // Create a new document for the user with uid
-      await DatabaseService(uid: user.uid).updateUserData(fullName, email, password);
+      await DatabaseService(uid: user.uid).updateTouristData(fullName, email, password);
       return _userFromFirebaseUser(user);
     } catch(e) {
       print(e.toString());
       return null;
     }
   }
+
+
+  // sign in guide with email and password
+  Future signInGuideWithEmailAndPassword(String email, String password) async {
+    bool isWrongLogin = await DatabaseService().isTouristSigningIn(email);
+    if(isWrongLogin) {
+      return null;
+    }
+    else {
+      try {
+        AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+        FirebaseUser user = result.user;
+        return _userFromFirebaseUser(user);
+      } catch(e) {
+        print(e.toString());
+        return null;
+      }
+    }
+  }
+
+
+  // register guide with email and password
+  Future registerGuideWithEmailAndPassword(String fullName, String email, String city, String password) async {
+    try {
+      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      FirebaseUser user = result.user;
+
+      // Create a new document for the user with uid
+      await DatabaseService(uid: user.uid).updateGuideData(fullName, email, city, password);
+      return _userFromFirebaseUser(user);
+    } catch(e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
 
   //sign out
   Future signOut() async {
