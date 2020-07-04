@@ -43,17 +43,7 @@ class _TouristSignInPageState extends State<TouristSignInPage> {
           await HelperFunctions.saveUserNameSharedPreference(
             userInfoSnapshot.documents[0].data['fullName']
           );
-
-          print("Signed In");
-          await HelperFunctions.getUserLoggedInSharedPreference().then((value) {
-            print("Logged in: $value");
-          });
-          await HelperFunctions.getUserEmailSharedPreference().then((value) {
-            print("Email: $value");
-          });
-          await HelperFunctions.getUserNameSharedPreference().then((value) {
-            print("Full Name: $value");
-          });
+          await HelperFunctions.saveUserTypeSharedPreference('Tourist');
 
           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => TouristHomePage()), (Route<dynamic> route) => false);
           // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => TouristHomePage()));

@@ -89,19 +89,9 @@ class AuthService {
       await HelperFunctions.saveUserLoggedInSharedPreference(false);
       await HelperFunctions.saveUserEmailSharedPreference('');
       await HelperFunctions.saveUserNameSharedPreference('');
+      await HelperFunctions.saveUserTypeSharedPreference('');
 
-      return await _auth.signOut().whenComplete(() async {
-        print("Logged out");
-        await HelperFunctions.getUserLoggedInSharedPreference().then((value) {
-          print("Logged in: $value");
-        });
-        await HelperFunctions.getUserEmailSharedPreference().then((value) {
-          print("Email: $value");
-        });
-        await HelperFunctions.getUserNameSharedPreference().then((value) {
-          print("Full Name: $value");
-        });
-      });
+      return await _auth.signOut();
     } catch(e) {
       print(e.toString());
       return null;
