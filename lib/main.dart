@@ -49,6 +49,10 @@ class _MyAppState extends State<MyApp> {
     return _isLoading ? Container(color: Colors.black87) : MaterialApp(
       title: 'TouristAssist',
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: Colors.lightBlueAccent,
+        backgroundColor: Colors.black87
+      ),
       // home: SelectUserTypePage()
       home: _isLoggedIn ? (_userType == 'Tourist' ? TouristHomePage() : GuideHomePage()) : SelectUserTypePage()
     );

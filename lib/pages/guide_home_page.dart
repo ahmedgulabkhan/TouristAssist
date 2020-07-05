@@ -10,7 +10,7 @@ class GuideHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Theme.of(context).primaryColor,
         title: Text('TouristAssist'),
         elevation: 0.0,
         actions: <Widget>[

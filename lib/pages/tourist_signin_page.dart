@@ -64,7 +64,7 @@ class _TouristSignInPageState extends State<TouristSignInPage> {
       body: Form(
         key: _formKey,
         child: Container(
-          color: Colors.black87,
+          color: Theme.of(context).backgroundColor,
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 80.0),
             children: <Widget>[

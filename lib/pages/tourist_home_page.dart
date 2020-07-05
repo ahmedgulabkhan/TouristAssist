@@ -1,3 +1,4 @@
+import 'package:TouristAssist/pages/booknow_page.dart';
 import 'package:TouristAssist/pages/selectusertype_page.dart';
 import 'package:TouristAssist/services/auth_service.dart';
 import 'package:TouristAssist/shared/loading.dart';
@@ -36,7 +37,7 @@ class _TouristHomePageState extends State<TouristHomePage> {
   Widget build(BuildContext context) {
     return _isLoading ? Loading() : Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Theme.of(context).primaryColor,
         title: Text('TouristAssist'),
         elevation: 0.0,
         actions: <Widget>[
@@ -77,6 +78,22 @@ class _TouristHomePageState extends State<TouristHomePage> {
             ]
           )
         ],
+      ),
+      bottomSheet: GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => BookNowPage()));
+        },
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 65.0,
+          color: Theme.of(context).primaryColor,
+          // onPressed: () {
+          //   Navigator.of(context).push(MaterialPageRoute(builder: (context) => BookNowPage()));
+          // },
+          child: Center(
+            child: Text('Book a Guide Now', style: TextStyle(color: Colors.white, fontSize: 20.0))
+          )
+        ),
       ),
     );
   }
