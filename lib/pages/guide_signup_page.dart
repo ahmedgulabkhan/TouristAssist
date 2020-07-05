@@ -19,7 +19,9 @@ class _GuideSignUpPageState extends State<GuideSignUpPage> {
 
   TextEditingController _fullNameEditingController = new TextEditingController();
   TextEditingController _emailEditingController = new TextEditingController();
+  TextEditingController _phoneNumberEditingController = new TextEditingController();
   TextEditingController _cityEditingController = new TextEditingController();
+  TextEditingController _costPerHourEditingController = new TextEditingController();
   TextEditingController _passwordEditingController = new TextEditingController();
   TextEditingController _confirmPasswordEditingController = new TextEditingController();
 
@@ -35,7 +37,7 @@ class _GuideSignUpPageState extends State<GuideSignUpPage> {
         _isLoading = true;
       });
 
-      await _authService.registerGuideWithEmailAndPassword(_fullNameEditingController.text, _emailEditingController.text, _cityEditingController.text, _passwordEditingController.text).then((result) async {
+      await _authService.registerGuideWithEmailAndPassword(_fullNameEditingController.text, _emailEditingController.text, _phoneNumberEditingController.text, _cityEditingController.text.toLowerCase(), _costPerHourEditingController.text, _passwordEditingController.text).then((result) async {
         if (result != null) {
           await HelperFunctions.saveUserLoggedInSharedPreference(true);
           await HelperFunctions.saveUserEmailSharedPreference(_emailEditingController.text);
@@ -107,11 +109,37 @@ class _GuideSignUpPageState extends State<GuideSignUpPage> {
                     
                   TextFormField(
                     style: TextStyle(color: Colors.white),
+                    controller: _phoneNumberEditingController,
+                    decoration: textInputDecoration.copyWith(
+                      hintText: 'Phone Number',
+                      hintStyle: TextStyle(color: Colors.grey),
+                      prefixIcon: Icon(Icons.phone, color: Colors.white)
+                    ),
+                    validator: (val) => val.isEmpty ? 'This field cannot be blank' : null
+                  ),
+
+                  SizedBox(height: 15.0),
+                    
+                  TextFormField(
+                    style: TextStyle(color: Colors.white),
                     controller: _cityEditingController,
                     decoration: textInputDecoration.copyWith(
                       hintText: 'Current City',
                       hintStyle: TextStyle(color: Colors.grey),
                       prefixIcon: Icon(Icons.location_on, color: Colors.white)
+                    ),
+                    validator: (val) => val.isEmpty ? 'This field cannot be blank' : null
+                  ),
+
+                  SizedBox(height: 15.0),
+                    
+                  TextFormField(
+                    style: TextStyle(color: Colors.white),
+                    controller: _costPerHourEditingController,
+                    decoration: textInputDecoration.copyWith(
+                      hintText: 'Cost per hour (Rs.)',
+                      hintStyle: TextStyle(color: Colors.grey),
+                      prefixIcon: Icon(Icons.attach_money, color: Colors.white)
                     ),
                     validator: (val) => val.isEmpty ? 'This field cannot be blank' : null
                   ),

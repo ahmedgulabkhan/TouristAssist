@@ -21,12 +21,15 @@ class DatabaseService {
   }
 
   // update guide data
-  Future updateGuideData(String fullName, String email, String city, String password) async {
+  Future updateGuideData(String fullName, String email, String phoneNumber, String city, String costPerHour, String password) async {
     return await guideCollection.document(uid).setData({
+      'uid': uid,
       'fullName': fullName,
       'email': email,
+      'phoneNumber': phoneNumber,
       'password': password,
-      'city': city
+      'city': city,
+      'costPerHour': costPerHour
     });
   }
 

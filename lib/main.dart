@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.lightBlueAccent,
-        backgroundColor: Colors.black87
+        backgroundColor: Colors.black87,
       ),
       // home: SelectUserTypePage()
       home: _isLoggedIn ? (_userType == 'Tourist' ? TouristHomePage() : GuideHomePage()) : SelectUserTypePage()

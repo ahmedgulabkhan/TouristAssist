@@ -17,6 +17,7 @@ class _TouristHomePageState extends State<TouristHomePage> {
 
   bool _isLoading = true;
   dynamic _touristLocation;
+  dynamic _currentUserCity;
   final AuthService _authService = AuthService();
 
   @override
@@ -27,8 +28,12 @@ class _TouristHomePageState extends State<TouristHomePage> {
 
   _getLocationDetails() async {
     final location = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+    List<Placemark> p = await Geolocator().placemarkFromCoordinates(location.latitude, location.longitude);
+    Placemark place = p[0];
+
     setState(() {
       _touristLocation = location;
+      _currentUserCity = place.locality.toLowerCase();
       _isLoading = false;
     });
   }
@@ -38,8 +43,11 @@ class _TouristHomePageState extends State<TouristHomePage> {
     return _isLoading ? Loading() : Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: Text('TouristAssist'),
+        title: Text('TouristAssist', style: TextStyle(color: Colors.white)),
         elevation: 0.0,
+        iconTheme: IconThemeData(
+          color: Colors.white
+        ),
         actions: <Widget>[
           GestureDetector(
             onTap: () async {
@@ -81,7 +89,7 @@ class _TouristHomePageState extends State<TouristHomePage> {
       ),
       bottomSheet: GestureDetector(
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => BookNowPage()));
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => BookNowPage(currentUserCity: _currentUserCity)));
         },
         child: Container(
           width: MediaQuery.of(context).size.width,
