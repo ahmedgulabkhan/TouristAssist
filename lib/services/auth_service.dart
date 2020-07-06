@@ -89,7 +89,6 @@ class AuthService {
       await HelperFunctions.saveUserLoggedInSharedPreference(false);
       await HelperFunctions.saveUserEmailSharedPreference('');
       await HelperFunctions.saveUserNameSharedPreference('');
-      await HelperFunctions.saveUserTypeSharedPreference('');
 
       return await _auth.signOut();
     } catch(e) {

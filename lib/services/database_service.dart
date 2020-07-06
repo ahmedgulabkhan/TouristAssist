@@ -29,7 +29,8 @@ class DatabaseService {
       'phoneNumber': phoneNumber,
       'password': password,
       'city': city,
-      'costPerHour': costPerHour
+      'costPerHour': costPerHour,
+      'rating': 0
     });
   }
 
@@ -38,6 +39,13 @@ class DatabaseService {
     QuerySnapshot snapshot = await touristCollection.where('email', isEqualTo: email).getDocuments();
     // print(snapshot.documents[0].data);
     return snapshot;
+  }
+
+  // get guide data
+  Future getGuideData(String uid) async {
+    QuerySnapshot snapshot = await guideCollection.where('uid', isEqualTo: uid).getDocuments();
+    print(snapshot.documents[0].data);
+    return snapshot.documents[0].data;
   }
 
   // is guide attempting to sign in as a tourist

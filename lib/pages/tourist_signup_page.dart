@@ -39,7 +39,6 @@ class _TouristSignUpPageState extends State<TouristSignUpPage> {
           await HelperFunctions.saveUserLoggedInSharedPreference(true);
           await HelperFunctions.saveUserEmailSharedPreference(_emailEditingController.text);
           await HelperFunctions.saveUserNameSharedPreference(_fullNameEditingController.text);
-          await HelperFunctions.saveUserTypeSharedPreference('Tourist');
 
           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => TouristHomePage()), (Route<dynamic> route) => false);
           // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => TouristHomePage()));

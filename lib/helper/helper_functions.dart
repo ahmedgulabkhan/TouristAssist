@@ -24,10 +24,6 @@ class HelperFunctions{
     return await preferences.setString(sharedPreferenceUserEmailKey, userEmail);
   }
 
-  static Future<bool> saveUserTypeSharedPreference(String userType) async{
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    return await preferences.setString(sharedPreferenceUserTypeKey, userType);
-  }
 
 
   // fetching data from sharedpreferences
@@ -44,11 +40,6 @@ class HelperFunctions{
   static Future<String> getUserEmailSharedPreference() async{
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getString(sharedPreferenceUserEmailKey);
-  }
-
-  static Future<String> getUserTypeSharedPreference() async{
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.getString(sharedPreferenceUserTypeKey);
   }
 
 }

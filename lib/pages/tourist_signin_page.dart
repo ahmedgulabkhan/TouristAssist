@@ -43,7 +43,6 @@ class _TouristSignInPageState extends State<TouristSignInPage> {
           await HelperFunctions.saveUserNameSharedPreference(
             userInfoSnapshot.documents[0].data['fullName']
           );
-          await HelperFunctions.saveUserTypeSharedPreference('Tourist');
 
           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => TouristHomePage()), (Route<dynamic> route) => false);
           // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => TouristHomePage()));

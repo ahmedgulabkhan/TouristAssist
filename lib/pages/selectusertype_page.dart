@@ -1,4 +1,4 @@
-import 'package:TouristAssist/pages/guide_authenticate_page.dart';
+import 'package:TouristAssist/pages/guide_signup_page.dart';
 import 'package:TouristAssist/pages/tourist_authenticate_page.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +30,7 @@ class SelectUserTypePage extends StatelessWidget {
 
             FlatButton(
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => GuideAuthenticatePage()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => GuideSignUpPage()));
               },
               child: Text('Get started as a Guide', style: TextStyle(color: Colors.white, fontSize: 18.0)),
               color: Colors.lightBlueAccent,

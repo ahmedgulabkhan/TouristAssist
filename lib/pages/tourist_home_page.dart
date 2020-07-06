@@ -1,5 +1,7 @@
+import 'package:TouristAssist/helper/helper_functions.dart';
 import 'package:TouristAssist/pages/booknow_page.dart';
 import 'package:TouristAssist/pages/selectusertype_page.dart';
+import 'package:TouristAssist/pages/settings_page.dart';
 import 'package:TouristAssist/services/auth_service.dart';
 import 'package:TouristAssist/shared/loading.dart';
 import 'package:flutter/material.dart';
@@ -18,15 +20,22 @@ class _TouristHomePageState extends State<TouristHomePage> {
   bool _isLoading = true;
   dynamic _touristLocation;
   dynamic _currentUserCity;
+  String _userName = '';
   final AuthService _authService = AuthService();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _getLocationDetails();
+    _getUserAndLocationDetails();
   }
 
-  _getLocationDetails() async {
+  _getUserAndLocationDetails() async {
+    await HelperFunctions.getUserNameSharedPreference().then((value) {
+      setState(() {
+        _userName = value;
+      });
+    });
     final location = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
     List<Placemark> p = await Geolocator().placemarkFromCoordinates(location.latitude, location.longitude);
     Placemark place = p[0];
@@ -41,22 +50,64 @@ class _TouristHomePageState extends State<TouristHomePage> {
   @override
   Widget build(BuildContext context) {
     return _isLoading ? Loading() : Scaffold(
+      key: _scaffoldKey,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: Text('TouristAssist', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.transparent,
         elevation: 0.0,
-        iconTheme: IconThemeData(
-          color: Colors.white
+        leading: IconButton(
+          iconSize: 35.0,
+          icon: Icon(Icons.menu, color: Colors.black),
+          onPressed: (){
+            _scaffoldKey.currentState.openDrawer();
+          },
         ),
-        actions: <Widget>[
-          GestureDetector(
-            onTap: () async {
-              await _authService.signOut();
-              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => SelectUserTypePage()), (Route<dynamic> route) => false);
-            },
-            child: Icon(Icons.exit_to_app),
-          )
-        ],
+      ),
+      drawer: Drawer(
+        child: Container(
+          child: ListView(
+            children: <Widget>[
+              Container(
+                height: 150.0,
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                color: Theme.of(context).backgroundColor,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.account_circle, color: Colors.white, size: 60.0),
+                    SizedBox(width: 10.0),
+                    Text(_userName, style: TextStyle(color: Colors.white, fontSize: 18.0))
+                  ],
+                ),
+              ),
+              ListTile(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+                leading: Icon(Icons.home),
+                title: Text('Home', style: TextStyle(fontSize: 16.0)),
+              ),
+              ListTile(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => SettingsPage()));
+                },
+                contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+                leading: Icon(Icons.settings),
+                title: Text('Settings', style: TextStyle(fontSize: 16.0)),
+              ),
+              ListTile(
+                onTap: () async {
+                  await _authService.signOut();
+                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => SelectUserTypePage()), (Route<dynamic> route) => false);
+                },
+                contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+                leading: Icon(Icons.exit_to_app, color: Colors.red),
+                title: Text('Sign Out', style: TextStyle(fontSize: 16.0, color: Colors.red)),
+              ),
+            ],
+          ),
+        ),
       ),
       body: FlutterMap(
         options: MapOptions(
@@ -95,9 +146,6 @@ class _TouristHomePageState extends State<TouristHomePage> {
           width: MediaQuery.of(context).size.width,
           height: 65.0,
           color: Theme.of(context).primaryColor,
-          // onPressed: () {
-          //   Navigator.of(context).push(MaterialPageRoute(builder: (context) => BookNowPage()));
-          // },
           child: Center(
             child: Text('Book a Guide Now', style: TextStyle(color: Colors.white, fontSize: 20.0))
           )

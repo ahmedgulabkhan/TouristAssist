@@ -1,5 +1,4 @@
 import 'package:TouristAssist/helper/helper_functions.dart';
-import 'package:TouristAssist/pages/guide_home_page.dart';
 import 'package:TouristAssist/pages/selectusertype_page.dart';
 import 'package:TouristAssist/pages/tourist_home_page.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
 
   bool _isLoggedIn;
-  String _userType;
   bool _isLoading = true;
 
   @override
@@ -29,12 +27,6 @@ class _MyAppState extends State<MyApp> {
     await HelperFunctions.getUserLoggedInSharedPreference().then((result) {
       setState(() {
         _isLoggedIn = result;
-      });
-    });
-
-    await HelperFunctions.getUserTypeSharedPreference().then((result) {
-      setState(() {
-        _userType = result;
       });
     });
 
@@ -54,7 +46,7 @@ class _MyAppState extends State<MyApp> {
         backgroundColor: Colors.black87,
       ),
       // home: SelectUserTypePage()
-      home: _isLoggedIn ? (_userType == 'Tourist' ? TouristHomePage() : GuideHomePage()) : SelectUserTypePage()
+      home: _isLoggedIn ? TouristHomePage() : SelectUserTypePage()
     );
   }
 }
