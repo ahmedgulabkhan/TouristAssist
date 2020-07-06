@@ -68,31 +68,86 @@ class _GuideDetailsPageState extends State<GuideDetailsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text('Name: ${_guideData['fullName']}', style: TextStyle(fontSize: 16.0)),
+                Text.rich(
+                  TextSpan(
+                    text: "Name: ",
+                    style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                    children: <TextSpan>[
+                      TextSpan(text: '${_guideData['fullName']}', style: TextStyle(fontWeight: FontWeight.normal)),
+                    ],
+                  ),
+                ),
+
                 Divider(height: 30.0),
-                Text('City: ${capitalize(_guideData['city'].toString())}', style: TextStyle(fontSize: 16.0)),
+
+                Text.rich(
+                  TextSpan(
+                    text: "City: ",
+                    style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                    children: <TextSpan>[
+                      TextSpan(text: '${capitalize(_guideData['city'].toString())}', style: TextStyle(fontWeight: FontWeight.normal)),
+                    ],
+                  ),
+                ),
+
                 Divider(height: 30.0),
-                Text('Rating: ${_guideData['rating']}⭐', style: TextStyle(fontSize: 16.0)),
+
+                Text.rich(
+                  TextSpan(
+                    text: "Rating: ",
+                    style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                    children: <TextSpan>[
+                      TextSpan(text: '${_guideData['rating']}⭐', style: TextStyle(fontWeight: FontWeight.normal)),
+                    ],
+                  ),
+                ),
+
                 Divider(height: 30.0),
-                Text('Cost: Rs. ${_guideData['costPerHour']}/hr', style: TextStyle(fontSize: 16.0)),
-                Divider(height: 30.0),
+
+                Text.rich(
+                  TextSpan(
+                    text: "Cost: ",
+                    style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                    children: <TextSpan>[
+                      TextSpan(text: 'Rs. ${_guideData['costPerHour']}/hr', style: TextStyle(fontWeight: FontWeight.normal)),
+                    ],
+                  ),
+                ),
               ],
             )            
           ),
         ],
       ),
-      bottomSheet: GestureDetector(
-        onTap: () {
-          _makePhoneCall('tel:${_guideData['phoneNumber']}');
-        },
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: 65.0,
-          color: Theme.of(context).primaryColor,
-          child: Center(
-            child: Text('Call now', style: TextStyle(color: Colors.white, fontSize: 20.0))
-          )
-        ),
+      bottomSheet: Row(
+        children: <Widget>[
+          GestureDetector(
+            onTap: () {
+              _makePhoneCall('tel:${_guideData['phoneNumber']}');
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width/2,
+              height: 65.0,
+              color: Theme.of(context).primaryColor,
+              child: Center(
+                child: Text('Call now', style: TextStyle(color: Colors.white, fontSize: 18.0))
+              )
+            ),
+          ),
+
+          GestureDetector(
+            onTap: () {
+              
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width/2,
+              height: 65.0,
+              color: Colors.green,
+              child: Center(
+                child: Text('Rate this Guide', style: TextStyle(color: Colors.white, fontSize: 18.0))
+              )
+            ),
+          ),
+        ],
       ),
     );
   }
