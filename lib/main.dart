@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
       title: 'TouristAssist',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.lightBlueAccent,
+        primaryColor: Colors.blue,
         backgroundColor: Colors.black87,
       ),
       // home: SelectUserTypePage()

@@ -40,7 +40,7 @@ class BookNowPage extends StatelessWidget {
         future: _getGuidesInfo(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if(snapshot.data == null) {
-            return Loading();
+            return LoadingAlt();
           }
           else {
             return ListView.builder(

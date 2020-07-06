@@ -45,7 +45,7 @@ class _GuideDetailsPageState extends State<GuideDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return _isLoading ? Loading() : Scaffold(
+    return _isLoading ? LoadingAlt() : Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,

@@ -44,7 +44,6 @@ class DatabaseService {
   // get guide data
   Future getGuideData(String uid) async {
     QuerySnapshot snapshot = await guideCollection.where('uid', isEqualTo: uid).getDocuments();
-    print(snapshot.documents[0].data);
     return snapshot.documents[0].data;
   }
 
