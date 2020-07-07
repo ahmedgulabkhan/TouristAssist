@@ -1,5 +1,6 @@
 import 'package:TouristAssist/services/database_service.dart';
 import 'package:TouristAssist/shared/loading.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -19,16 +20,22 @@ class _GuideDetailsPageState extends State<GuideDetailsPage> {
   dynamic _guideData;
   int starNum = 0;
   String error = '';
+  FirebaseUser _user;
+  bool _didUserRate = false;
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _getGuideDetails();
+    _getCurrentUserAndGuideDetails();
   }
 
-  _getGuideDetails() async {
+  _getCurrentUserAndGuideDetails() async {
+    _user = await FirebaseAuth.instance.currentUser();
     _guideData = await DatabaseService().getGuideData(widget.guideUid);
+    if(_guideData['votes'].contains(_user.uid)) {
+      _didUserRate = true;
+    }
 
     setState(() {
       _isLoading = false;
@@ -330,8 +337,12 @@ class _GuideDetailsPageState extends State<GuideDetailsPage> {
     }
   }
 
-  Future _submitRating() {
-    
+  _submitRating(String guideUid) async {
+    // setState(() {
+    //   _didUserRate = true;
+    // });
+    await DatabaseService(uid: guideUid).submitRating(starNum, _user.uid);
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => GuideDetailsPage(guideUid: guideUid,)));
   }
 
   @override
@@ -388,7 +399,7 @@ class _GuideDetailsPageState extends State<GuideDetailsPage> {
                     text: "Rating: ",
                     style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                     children: <TextSpan>[
-                      TextSpan(text: '${_guideData['rating']}⭐', style: TextStyle(fontWeight: FontWeight.normal)),
+                      TextSpan(text: '${_guideData['rating']}⭐  (${_guideData['votes'].length} votes)', style: TextStyle(fontWeight: FontWeight.normal)),
                     ],
                   ),
                 ),
@@ -412,17 +423,29 @@ class _GuideDetailsPageState extends State<GuideDetailsPage> {
 
           SizedBox(height: 5.0),
 
+          _didUserRate ? 
+          Container(
+            width: MediaQuery.of(context).size.width,
+            child: Center(
+              child: FlatButton(
+                color: Colors.grey,
+                onPressed: () {},
+                child: Text('Already rated this guide', style: TextStyle(color: Colors.black))
+              ),
+            ),
+          )
+          :
           Container(
             width: MediaQuery.of(context).size.width,
             child: Center(
               child: FlatButton(
                 color: Colors.green,
-                onPressed: () {
+                onPressed: () async {
                   if(starNum != 0) {
-                    _submitRating();
                     setState(() {
                       error = '';
                     });
+                    await _submitRating(widget.guideUid);
                   }
                   else {
                     setState(() {

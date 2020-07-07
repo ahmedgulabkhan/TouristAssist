@@ -30,7 +30,8 @@ class DatabaseService {
       'password': password,
       'city': city,
       'costPerHour': costPerHour,
-      'rating': 0
+      'rating': 0,
+      'votes': []
     });
   }
 
@@ -63,5 +64,14 @@ class DatabaseService {
       return false;
     }
     else return true;
+  }
+
+  // submit rating
+  submitRating(int starNum, String userUid) async {
+    DocumentSnapshot guideDocSnapshot = await guideCollection.document(uid).get();
+    await guideCollection.document(uid).updateData({
+      'rating': ((guideDocSnapshot.data['rating'] * guideDocSnapshot.data['votes'].length) + starNum) / (guideDocSnapshot.data['votes'].length + 1),
+      'votes': FieldValue.arrayUnion([userUid])
+    });
   }
 }
