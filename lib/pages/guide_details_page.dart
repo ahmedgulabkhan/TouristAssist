@@ -17,6 +17,8 @@ class GuideDetailsPage extends StatefulWidget {
 class _GuideDetailsPageState extends State<GuideDetailsPage> {
 
   dynamic _guideData;
+  int starNum = 0;
+  String error = '';
   bool _isLoading = true;
 
   @override
@@ -42,6 +44,295 @@ class _GuideDetailsPageState extends State<GuideDetailsPage> {
   }
 
   String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
+
+  Widget _starBuilder() {
+    if(starNum == 0) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 1;
+              });
+            },
+            child: Icon(Icons.star_border)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 2;
+              });
+            },
+            child: Icon(Icons.star_border)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 3;
+              });
+            },
+            child: Icon(Icons.star_border)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 4;
+              });
+            },
+            child: Icon(Icons.star_border)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 5;
+              });
+            },
+            child: Icon(Icons.star_border)
+          ),
+        ],
+      );
+    }
+    else if(starNum == 1) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 1;
+              });
+            },
+            child: Icon(Icons.star, color: Colors.yellow)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 2;
+              });
+            },
+            child: Icon(Icons.star_border)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 3;
+              });
+            },
+            child: Icon(Icons.star_border)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 4;
+              });
+            },
+            child: Icon(Icons.star_border)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 5;
+              });
+            },
+            child: Icon(Icons.star_border)
+          ),
+        ],
+      );
+    }
+    else if(starNum == 2) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 1;
+              });
+            },
+            child: Icon(Icons.star, color: Colors.yellow)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 2;
+              });
+            },
+            child: Icon(Icons.star, color: Colors.yellow)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 3;
+              });
+            },
+            child: Icon(Icons.star_border)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 4;
+              });
+            },
+            child: Icon(Icons.star_border)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 5;
+              });
+            },
+            child: Icon(Icons.star_border)
+          ),
+        ],
+      );
+    }
+    else if(starNum == 3) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 1;
+              });
+            },
+            child: Icon(Icons.star, color: Colors.yellow)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 2;
+              });
+            },
+            child: Icon(Icons.star, color: Colors.yellow)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 3;
+              });
+            },
+            child: Icon(Icons.star, color: Colors.yellow)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 4;
+              });
+            },
+            child: Icon(Icons.star_border)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 5;
+              });
+            },
+            child: Icon(Icons.star_border)
+          ),
+        ],
+      );
+    }
+    else if(starNum == 4) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 1;
+              });
+            },
+            child: Icon(Icons.star, color: Colors.yellow)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 2;
+              });
+            },
+            child: Icon(Icons.star, color: Colors.yellow)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 3;
+              });
+            },
+            child: Icon(Icons.star, color: Colors.yellow)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 4;
+              });
+            },
+            child: Icon(Icons.star, color: Colors.yellow)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 5;
+              });
+            },
+            child: Icon(Icons.star_border)
+          ),
+        ],
+      );
+    }
+    else {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 1;
+              });
+            },
+            child: Icon(Icons.star, color: Colors.yellow)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 2;
+              });
+            },
+            child: Icon(Icons.star, color: Colors.yellow)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 3;
+              });
+            },
+            child: Icon(Icons.star, color: Colors.yellow)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 4;
+              });
+            },
+            child: Icon(Icons.star, color: Colors.yellow)
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                starNum = 5;
+              });
+            },
+            child: Icon(Icons.star, color: Colors.yellow)
+          ),
+        ],
+      );
+    }
+  }
+
+  Future _submitRating() {
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +407,39 @@ class _GuideDetailsPageState extends State<GuideDetailsPage> {
               ],
             )            
           ),
+
+          _starBuilder(),
+
+          SizedBox(height: 5.0),
+
+          Container(
+            width: MediaQuery.of(context).size.width,
+            child: Center(
+              child: FlatButton(
+                color: Colors.green,
+                onPressed: () {
+                  if(starNum != 0) {
+                    _submitRating();
+                    setState(() {
+                      error = '';
+                    });
+                  }
+                  else {
+                    setState(() {
+                      error = 'Rating cannot be 0';
+                    });
+                  }
+                },
+                child: Text('Give Rating', style: TextStyle(color: Colors.white))
+              ),
+            ),
+          ),
+
+          SizedBox(height: 10.0),
+
+          Center(
+            child: Text(error, style: TextStyle(color: Colors.red, fontSize: 14.0))
+          )
         ],
       ),
       bottomSheet: Row(
@@ -125,25 +449,11 @@ class _GuideDetailsPageState extends State<GuideDetailsPage> {
               _makePhoneCall('tel:${_guideData['phoneNumber']}');
             },
             child: Container(
-              width: MediaQuery.of(context).size.width/2,
+              width: MediaQuery.of(context).size.width,
               height: 65.0,
               color: Theme.of(context).primaryColor,
               child: Center(
                 child: Text('Call now', style: TextStyle(color: Colors.white, fontSize: 18.0))
-              )
-            ),
-          ),
-
-          GestureDetector(
-            onTap: () {
-              
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.width/2,
-              height: 65.0,
-              color: Colors.green,
-              child: Center(
-                child: Text('Rate this Guide', style: TextStyle(color: Colors.white, fontSize: 18.0))
               )
             ),
           ),
