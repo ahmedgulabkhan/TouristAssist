@@ -57,7 +57,12 @@ class _SettingsPageState extends State<SettingsPage> {
 
     await DatabaseService(uid: user.uid).deleteUser();
     user.delete();
-    
+
+    await HelperFunctions.saveUserLoggedInSharedPreference(false);
+    await HelperFunctions.saveUserEmailSharedPreference('');
+    await HelperFunctions.saveUserNameSharedPreference('');
+    await HelperFunctions.saveUserPasswordSharedPreference('');
+
     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => SelectUserTypePage()), (Route<dynamic> route) => false);
   }
 
