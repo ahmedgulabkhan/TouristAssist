@@ -1,24 +1,56 @@
+import 'package:TouristAssist/helper/helper_functions.dart';
 import 'package:TouristAssist/pages/change_name_page.dart';
 import 'package:TouristAssist/pages/change_password_page.dart';
+import 'package:TouristAssist/shared/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
 
-  final String userName;
-  final String userPassword;
-  final String userEmail;
+  @override
+  _SettingsPageState createState() => _SettingsPageState();
+}
 
-  SettingsPage({
-    this.userName,
-    this.userEmail,
-    this.userPassword
-  });
+class _SettingsPageState extends State<SettingsPage> {
 
+  FirebaseUser user;
+  String userName = '';
+  String userEmail = '';
+  String userPassword = '';
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserDetails();
+  }
+
+  _getUserDetails() async {
+    user = await FirebaseAuth.instance.currentUser();
+    await HelperFunctions.getUserNameSharedPreference().then((value) {
+      setState(() {
+        userName = value;
+      });
+    });
+    await HelperFunctions.getUserEmailSharedPreference().then((value) {
+      setState(() {
+        userEmail = value;
+      });
+    });
+    await HelperFunctions.getUserPasswordSharedPreference().then((value) {
+      setState(() {
+        userPassword = value;
+      });
+    });
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _isLoading ? LoadingAlt() : Scaffold(
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Theme.of(context).primaryColor,
@@ -31,7 +63,7 @@ class SettingsPage extends StatelessWidget {
         children: <Widget>[
           ListTile(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangeNamePage()));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangeNamePage(userUid: user.uid)));
             },
             title: Text('Name'),
             subtitle: Text(userName),
@@ -44,12 +76,11 @@ class SettingsPage extends StatelessWidget {
             },
             title: Text('Email'),
             subtitle: Text(userEmail),
-            trailing: Text('Change Email'),
           ),
           Divider(),
           ListTile(
             onTap: () {
-               Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangePasswordPage()));
+               Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangePasswordPage(userUid: user.uid)));
             },
             title: Text('Password'),
             trailing: Text('Change Password'),

@@ -1,14 +1,41 @@
+import 'package:TouristAssist/helper/helper_functions.dart';
+import 'package:TouristAssist/pages/tourist_home_page.dart';
+import 'package:TouristAssist/services/database_service.dart';
 import 'package:TouristAssist/shared/constants.dart';
+import 'package:TouristAssist/shared/loading.dart';
 import 'package:flutter/material.dart';
 
-class ChangeNamePage extends StatelessWidget {
+class ChangeNamePage extends StatefulWidget {
 
+  final String userUid;
+  ChangeNamePage({
+    this.userUid
+  });
+
+  @override
+  _ChangeNamePageState createState() => _ChangeNamePageState();
+}
+
+class _ChangeNamePageState extends State<ChangeNamePage> {
+
+  bool _isLoading = false;
   final _formKey = GlobalKey<FormState>();
   TextEditingController _nameEditingController = new TextEditingController();
 
+  void _changeName(BuildContext context, String newName) async {
+    if (_formKey.currentState.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+      await DatabaseService(uid: widget.userUid).changeName(newName);
+      await HelperFunctions.saveUserNameSharedPreference(newName);
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => TouristHomePage()), (Route<dynamic> route) => false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _isLoading ? LoadingAlt() : Scaffold(
       appBar: AppBar(
         title: Text('Change name', style: TextStyle(color: Colors.white)),
         elevation: 0.0,
@@ -33,7 +60,7 @@ class ChangeNamePage extends StatelessWidget {
               FlatButton(
                 color: Colors.green,
                 onPressed: () {
-
+                  _changeName(context, _nameEditingController.text);
                 },
                 child: Text('Change name', style: TextStyle(color: Colors.white))
               )

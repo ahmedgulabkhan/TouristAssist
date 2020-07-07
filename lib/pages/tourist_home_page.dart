@@ -21,8 +21,6 @@ class _TouristHomePageState extends State<TouristHomePage> {
   dynamic _touristLocation;
   dynamic _currentUserCity;
   String _userName = '';
-  String _userEmail = '';
-  String _userPassword = '';
   final AuthService _authService = AuthService();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -36,16 +34,6 @@ class _TouristHomePageState extends State<TouristHomePage> {
     await HelperFunctions.getUserNameSharedPreference().then((value) {
       setState(() {
         _userName = value;
-      });
-    });
-    await HelperFunctions.getUserEmailSharedPreference().then((value) {
-      setState(() {
-        _userEmail = value;
-      });
-    });
-    await HelperFunctions.getUserPasswordSharedPreference().then((value) {
-      setState(() {
-        _userPassword = value;
       });
     });
     final location = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
@@ -102,7 +90,7 @@ class _TouristHomePageState extends State<TouristHomePage> {
               ),
               ListTile(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => SettingsPage(userName: _userName, userEmail: _userEmail, userPassword: _userPassword)));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => SettingsPage()));
                 },
                 contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
                 leading: Icon(Icons.settings),

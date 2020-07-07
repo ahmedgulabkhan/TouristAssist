@@ -74,4 +74,18 @@ class DatabaseService {
       'votes': FieldValue.arrayUnion([userUid])
     });
   }
+
+  // update name
+  changeName(String newName) async {
+    return await touristCollection.document(uid).updateData({
+      'fullName': newName
+    });
+  }
+
+  // update name
+  changePassword(String newPassword) async {
+    return await touristCollection.document(uid).updateData({
+      'password': newPassword
+    });
+  }
 }
