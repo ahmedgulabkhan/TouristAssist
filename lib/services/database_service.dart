@@ -88,4 +88,9 @@ class DatabaseService {
       'password': newPassword
     });
   }
+
+  // delete user account
+  deleteUser() async {
+    return await touristCollection.document(uid).delete();
+  }
 }

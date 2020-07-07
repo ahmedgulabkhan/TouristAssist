@@ -1,6 +1,8 @@
 import 'package:TouristAssist/helper/helper_functions.dart';
 import 'package:TouristAssist/pages/change_name_page.dart';
 import 'package:TouristAssist/pages/change_password_page.dart';
+import 'package:TouristAssist/pages/selectusertype_page.dart';
+import 'package:TouristAssist/services/database_service.dart';
 import 'package:TouristAssist/shared/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +50,17 @@ class _SettingsPageState extends State<SettingsPage> {
     });
   }
 
+  _deleteAccount() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    await DatabaseService(uid: user.uid).deleteUser();
+    user.delete();
+    
+    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => SelectUserTypePage()), (Route<dynamic> route) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return _isLoading ? LoadingAlt() : Scaffold(
@@ -87,7 +100,9 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           Divider(),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              _deleteAccount();
+            },
             title: Text('Delete account', style: TextStyle(color: Colors.red)),
           )
         ],
