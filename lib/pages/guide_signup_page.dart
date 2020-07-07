@@ -3,6 +3,7 @@ import 'package:TouristAssist/services/auth_service.dart';
 import 'package:TouristAssist/shared/constants.dart';
 import 'package:TouristAssist/shared/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 class GuideSignUpPage extends StatefulWidget {
 
@@ -23,8 +24,22 @@ class _GuideSignUpPageState extends State<GuideSignUpPage> {
   final AuthService _authService = new AuthService();
 
   final _formKey = GlobalKey<FormState>();
+  dynamic _guideLocation = '';
   bool _isLoading = false;
   String _error = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _getLocation();
+  }
+
+  _getLocation() async {
+    final location = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+    setState(() {
+      _guideLocation = location;
+    });
+  }
 
   _onRegister() async {
     if (_formKey.currentState.validate()) {
@@ -32,7 +47,7 @@ class _GuideSignUpPageState extends State<GuideSignUpPage> {
         _isLoading = true;
       });
 
-      await _authService.registerGuideWithEmailAndPassword(_fullNameEditingController.text, _emailEditingController.text, _phoneNumberEditingController.text, _cityEditingController.text.toLowerCase(), _costPerHourEditingController.text, _passwordEditingController.text).then((result) async {
+      await _authService.registerGuideWithEmailAndPassword(_fullNameEditingController.text, _emailEditingController.text, _phoneNumberEditingController.text, _cityEditingController.text.toLowerCase(), _costPerHourEditingController.text, _passwordEditingController.text, _guideLocation.latitude, _guideLocation.longitude).then((result) async {
         if (result != null) {
           // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => SuccessGuideSignUpPage()), (Route<dynamic> route) => false);
           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SuccessGuideSignUpPage()));
@@ -161,6 +176,13 @@ class _GuideSignUpPageState extends State<GuideSignUpPage> {
                     validator: (val) => val == _passwordEditingController.text ? null : 'Does not macth the password',
                     obscureText: true,
                   ),
+
+                  SizedBox(height: 10.0),
+
+                  Text('Your current location will be used for signing up', style: TextStyle(color: Colors.white)),
+
+                  _guideLocation == '' ? Text('') :
+                  Text('Lat: ${_guideLocation.latitude.toStringAsFixed(3)}, Long: ${_guideLocation.longitude.toStringAsFixed(3)}', style: TextStyle(color: Colors.white)),
 
                   SizedBox(height: 20.0),
                     

@@ -21,7 +21,7 @@ class DatabaseService {
   }
 
   // update guide data
-  Future updateGuideData(String fullName, String email, String phoneNumber, String city, String costPerHour, String password) async {
+  Future updateGuideData(String fullName, String email, String phoneNumber, String city, String costPerHour, String password, double latitude, double longitude) async {
     return await guideCollection.document(uid).setData({
       'uid': uid,
       'fullName': fullName,
@@ -31,7 +31,9 @@ class DatabaseService {
       'city': city,
       'costPerHour': costPerHour,
       'rating': 0,
-      'votes': []
+      'votes': [],
+      'latitude': latitude,
+      'longitude': longitude
     });
   }
 
