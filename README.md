@@ -4,10 +4,7 @@ TouristAssist is an app made using Flutter and Firebase which helps tourists to 
 
 ## Snapshots of the application
 
-![Screenshots](/snapshots/snapshot2.jpeg)
-![Screenshots](/snapshots/snapshot1.jpeg)
-![Screenshots](/snapshots/snapshot4.jpeg)
-![Screenshots](/snapshots/snapshot3.jpeg)
+![Screenshots](/snapshots/snapshot5.jpeg)
 
 ## Configuration Steps
 1. Cloning the repository:
