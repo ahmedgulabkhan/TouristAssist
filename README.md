@@ -1,16 +1,28 @@
 # TouristAssist
+## About
 
-A new Flutter project.
 
-## Getting Started
+## Snapshots of the application
 
-This project is a starting point for a Flutter application.
+![Screenshots](/snapshots/)
 
-A few resources to get you started if this is your first Flutter project:
+## Configuration Steps
+1. Cloning the repository:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+```
+$ git clone https://github.com/ahmedgulabkhan/TouristAssist.git
+```
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+2. Open the project and install dependencies (using terminal):
+
+```
+$ cd TouristAssist
+$ flutter pub get
+```
+This installs all the required dependencies like cloud_firestore, firebase_auth, shared_preferences, flutter_map, geolocator, etc...
+
+3. Make an android project on your firebase account, follow the mentioned steps and you're good to go.
+
+4. Now run the app on your connected device (using terminal):
+
+`$ flutter run`
