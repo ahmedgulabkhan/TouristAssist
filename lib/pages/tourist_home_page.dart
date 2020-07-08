@@ -1,9 +1,11 @@
 import 'package:TouristAssist/helper/helper_functions.dart';
 import 'package:TouristAssist/pages/booknow_page.dart';
+import 'package:TouristAssist/pages/guide_details_page.dart';
 import 'package:TouristAssist/pages/selectusertype_page.dart';
 import 'package:TouristAssist/pages/settings_page.dart';
 import 'package:TouristAssist/services/auth_service.dart';
 import 'package:TouristAssist/shared/loading.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
@@ -21,6 +23,7 @@ class _TouristHomePageState extends State<TouristHomePage> {
   dynamic _touristLocation;
   dynamic _currentUserCity;
   String _userName = '';
+  List<dynamic> _guides;
   final AuthService _authService = AuthService();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -45,6 +48,47 @@ class _TouristHomePageState extends State<TouristHomePage> {
       _currentUserCity = place.locality.toLowerCase();
       _isLoading = false;
     });
+
+    QuerySnapshot snapshot = await Firestore.instance.collection('guides').where('city', isEqualTo: _currentUserCity).getDocuments();
+    _guides = snapshot.documents;
+  }
+
+  List<Marker> _getGuideMarkers() {
+    List<Marker> _markers = [
+      Marker(
+        height: 45.0,
+        width: 45.0,
+        point: LatLng(_touristLocation.latitude, _touristLocation.longitude),
+        builder: (context) => Container(
+          child: IconButton(
+            icon: Icon(Icons.location_on),
+            color: Colors.red,
+            iconSize: 45.0,
+            onPressed: () {}
+          ),
+        )
+      ),
+    ];
+
+    for(dynamic item in _guides ) {
+      _markers.add(
+        Marker(
+          height: 30.0,
+          width: 30.0,
+          point: LatLng(item['latitude'], item['longitude']),
+          builder: (context) => Container(
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => GuideDetailsPage(guideUid: item['uid'])));
+              },
+              child: Text('📍', style: TextStyle(fontSize: 30.0))
+            ),
+          )
+        )
+      );
+    }
+
+    return _markers;
   }
   
   @override
@@ -120,21 +164,7 @@ class _TouristHomePageState extends State<TouristHomePage> {
             subdomains: ['a', 'b', 'c']
           ),
           MarkerLayerOptions(
-            markers: [
-              Marker(
-                height: 45.0,
-                width: 45.0,
-                point: LatLng(_touristLocation.latitude, _touristLocation.longitude),
-                builder: (context) => Container(
-                  child: IconButton(
-                    icon: Icon(Icons.location_on),
-                    color: Colors.red,
-                    iconSize: 45.0,
-                    onPressed: () {}
-                  ),
-                )
-              )
-            ]
+            markers: _getGuideMarkers()
           )
         ],
       ),

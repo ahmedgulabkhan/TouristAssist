@@ -53,7 +53,7 @@ class BookNowPage extends StatelessWidget {
                     child: Text(snapshot.data[index]['fullName'].substring(0,1).toUpperCase(), style: TextStyle(color: Colors.white)),
                   ),
                   title: Text(snapshot.data[index]['fullName'], style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
-                  subtitle: Text('4⭐ • Rs. ${snapshot.data[index]['costPerHour']}/hr'),
+                  subtitle: Text('${snapshot.data[index]['rating']}⭐ (${snapshot.data[index]['votes'].length}) • Rs. ${snapshot.data[index]['costPerHour']}/hr'),
                   trailing: FlatButton(
                     color: Colors.blue,
                     onPressed: () {
