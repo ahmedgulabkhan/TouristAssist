@@ -13,7 +13,7 @@ class SelectUserTypePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('TravelAssist 🚀', style: TextStyle(color: Colors.white, fontSize: 40.0, fontWeight: FontWeight.bold)),
+            Text('TouristAssist 🚀', style: TextStyle(color: Colors.white, fontSize: 40.0, fontWeight: FontWeight.bold)),
 
             SizedBox(height: 50.0),
 

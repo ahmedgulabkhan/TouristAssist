@@ -70,22 +70,24 @@ class _TouristHomePageState extends State<TouristHomePage> {
       ),
     ];
 
-    for(dynamic item in _guides ) {
-      _markers.add(
-        Marker(
-          height: 30.0,
-          width: 30.0,
-          point: LatLng(item['latitude'], item['longitude']),
-          builder: (context) => Container(
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => GuideDetailsPage(guideUid: item['uid'])));
-              },
-              child: Text('📍', style: TextStyle(fontSize: 30.0))
-            ),
+    if(_guides != []) {
+      for(dynamic item in _guides ) {
+        _markers.add(
+          Marker(
+            height: 30.0,
+            width: 30.0,
+            point: LatLng(item['latitude'], item['longitude']),
+            builder: (context) => Container(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => GuideDetailsPage(guideUid: item['uid'])));
+                },
+                child: Text('📍', style: TextStyle(fontSize: 30.0))
+              ),
+            )
           )
-        )
-      );
+        );
+      }
     }
 
     return _markers;
