@@ -1,6 +1,6 @@
 # TouristAssist
 ## About
-TouristAssist is an app made using Flutter and Firebase which helps tourists to book local guides according to the current city they are present in. It shows a map of their current location and all the guides present in that area.
+TouristAssist is an app made using Flutter and Firebase which provides a better tourism experience. Tourists can sign up and book local guides based on the current city they are present in. It shows a map of their current location and all the guides present in that area.
 
 ## Snapshots of the application
 

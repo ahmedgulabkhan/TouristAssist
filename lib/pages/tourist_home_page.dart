@@ -70,7 +70,7 @@ class _TouristHomePageState extends State<TouristHomePage> {
       ),
     ];
 
-    if(_guides != []) {
+    if(_guides != null) {
       for(dynamic item in _guides ) {
         _markers.add(
           Marker(
